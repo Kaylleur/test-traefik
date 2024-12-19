@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--providers.file.directory=/etc/traefik" # Non nécessaire si vous n'utilisez pas le file provider
+      - "--providers.file.watch=true"
+      - "--api.insecure=true"
+      - "--log.level=INFO"
+    volumes:
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+    ports:
+      - "80:80"
+      - "8080:8080" # Pour accéder au dashboard Traefik sur http://localhost:8080
+    depends_on:
+      - flask
+    networks:
+      - web
+
+  flask:
+    build: ./flask
+    volumes:
+      - ./config:/config
+    networks:
+      - web
+
+  nginx1:
+    image: nginx:alpine
+    volumes:
+      - ./nginx1/index.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      - web
+
+  nginx2:
+    image: nginx:alpine
+    volumes:
+      - ./nginx2/index.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      - web
+
+  nginx3:
+    image: nginx:alpine
+    volumes:
+      - ./nginx3/index.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
+

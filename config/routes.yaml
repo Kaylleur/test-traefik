@@ -1,0 +1,8 @@
+routes:
+  - host: "michel.g4.south-squad.io"
+    service_url: "http://nginx1:80"
+  - host: "giselle.g4.south-squad.io"
+    service_url: "http://nginx2:80"
+  - host: "toto.g4.south-squad.io"
+    service_url: "http://nginx3:80"
+

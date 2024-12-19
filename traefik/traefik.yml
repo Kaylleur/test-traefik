@@ -1,0 +1,13 @@
+# traefik/traefik.yml
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  http:
+    endpoint: "http://flask:5000/traefik/config"
+    pollInterval: "10s"  # Vérification toutes les 10s, à ajuster selon vos besoins
+
+api:
+  dashboard: true
+
